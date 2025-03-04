@@ -90,4 +90,12 @@ Při vyhledávání je dotaz převeden na embedding a porovnán s uloženými ve
 
 ## Licence
 
-[Doplňte licenci] 
+Tento projekt je licencován pod Apache License 2.0 - viz [oficiální text licence](https://www.apache.org/licenses/LICENSE-2.0).
+
+### Shrnutí licence Apache 2.0:
+- Můžete svobodně používat, upravovat a distribuovat tento software
+- Můžete používat software pro komerční účely
+- Nemusíte sdílet zdrojový kód vašich modifikací
+- Musíte zachovat informace o autorských právech a licenci
+- Poskytuje explicitní udělení patentových práv od přispěvatelů
+- Neposkytuje žádnou záruku a odmítá odpovědnost za škody 
