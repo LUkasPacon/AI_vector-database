@@ -1,101 +1,101 @@
 # PDF to Pinecone Vector Database
 
-Tento projekt umožňuje extrakci textu z PDF dokumentů, jeho rozdělení na menší části, vytvoření vektorových reprezentací pomocí OpenAI embeddings a následné uložení do Pinecone vektorové databáze pro efektivní sémantické vyhledávání.
+This project enables text extraction from PDF documents, splitting it into smaller chunks, creating vector representations using OpenAI embeddings, and storing them in a Pinecone vector database for efficient semantic searching.
 
-## Funkce
+## Features
 
-- **Extrakce textu z PDF** - Automatické načtení a extrakce textu z PDF dokumentů
-- **Inteligentní chunking** - Rozdělení textu na menší části s nastavitelnou velikostí a překryvem
-- **Vektorizace pomocí OpenAI** - Vytvoření kvalitních embeddings pomocí modelu `text-embedding-3-large`
-- **Ukládání do Pinecone** - Efektivní ukládání vektorů do Pinecone databáze
-- **Sémantické vyhledávání** - Vyhledávání relevantních informací pomocí přirozeného jazyka
-- **Interaktivní rozhraní** - Jednoduché uživatelské rozhraní pro nahrávání a vyhledávání
+- **PDF Text Extraction** - Automatic loading and extraction of text from PDF documents
+- **Intelligent Chunking** - Splitting text into smaller parts with adjustable size and overlap
+- **Vectorization with OpenAI** - Creation of high-quality embeddings using the `text-embedding-3-large` model
+- **Pinecone Storage** - Efficient storage of vectors in the Pinecone database
+- **Semantic Search** - Finding relevant information using natural language
+- **Interactive Interface** - Simple user interface for uploading and searching
 
-## Požadavky
+## Requirements
 
 - Python 3.7+
-- OpenAI API klíč
-- Pinecone API klíč
-- Nainstalované závislosti z `requirements.txt`
+- OpenAI API key
+- Pinecone API key
+- Dependencies installed from `requirements.txt`
 
-## Instalace
+## Installation
 
-1. Naklonujte repozitář:
+1. Clone the repository:
    ```bash
-   git clone <url-repozitáře>
-   cd <název-adresáře>
+   git clone <repository-url>
+   cd <directory-name>
    ```
 
-2. Nainstalujte závislosti:
+2. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Vytvořte soubor `.env` s vašimi API klíči:
+3. Create a `.env` file with your API keys:
    ```
-   OPENAI_API_KEY=váš-openai-api-klíč
-   PINECONE_API_KEY=váš-pinecone-api-klíč
+   OPENAI_API_KEY=your-openai-api-key
+   PINECONE_API_KEY=your-pinecone-api-key
    ```
 
-## Použití
+## Usage
 
-Spusťte skript příkazem:
+Run the script with the command:
 ```bash
 python3 pdf_to_pinecone.py
 ```
 
-### Nahrání PDF do Pinecone
+### Uploading a PDF to Pinecone
 
-1. Vyberte možnost nahrání PDF do Pinecone
-2. Zadejte cestu k PDF souboru
-3. Volitelně nastavte velikost chunků a překryv
-4. Počkejte na dokončení procesu
+1. Select the option to upload a PDF to Pinecone
+2. Enter the path to the PDF file
+3. Optionally set the chunk size and overlap
+4. Wait for the process to complete
 
-### Vyhledávání v dokumentu
+### Searching in the Document
 
-1. Vyberte možnost vyhledávání v dokumentu
-2. Zadejte váš dotaz v přirozeném jazyce
-3. Prohlédněte si výsledky seřazené podle relevance
+1. Select the option to search in the document
+2. Enter your query in natural language
+3. View the results sorted by relevance
 
-## Jak to funguje
+## How It Works
 
-### 1. Extrakce textu z PDF
-Skript používá knihovnu PyPDF2 k extrakci textu ze všech stránek PDF dokumentu.
+### 1. PDF Text Extraction
+The script uses the PyPDF2 library to extract text from all pages of the PDF document.
 
-### 2. Rozdělení textu na části (chunking)
-Extrahovaný text je rozdělen na menší překrývající se části (chunky) pro efektivní zpracování a vyhledávání.
+### 2. Text Chunking
+The extracted text is divided into smaller overlapping parts (chunks) for efficient processing and searching.
 
-### 3. Vytváření embeddings
-Pro každý chunk je vytvořen embedding (vektorová reprezentace) pomocí OpenAI API a modelu `text-embedding-3-large`.
+### 3. Creating Embeddings
+For each chunk, an embedding (vector representation) is created using the OpenAI API and the `text-embedding-3-large` model.
 
-### 4. Ukládání do Pinecone
-Embeddings jsou uloženy do Pinecone vektorové databáze spolu s metadaty obsahujícími původní text a informace o pozici v dokumentu.
+### 4. Storing in Pinecone
+Embeddings are stored in the Pinecone vector database along with metadata containing the original text and information about the position in the document.
 
-### 5. Vyhledávání
-Při vyhledávání je dotaz převeden na embedding a porovnán s uloženými vektory v Pinecone. Výsledky jsou seřazeny podle podobnosti.
+### 5. Searching
+When searching, the query is converted to an embedding and compared with the stored vectors in Pinecone. Results are sorted by similarity.
 
-## Optimalizace
+## Optimization
 
-- **Velikost chunků**: Menší chunky (500-1000 znaků) jsou vhodné pro přesné vyhledávání konkrétních informací, větší chunky (1500-2000 znaků) zachovávají více kontextu.
-- **Překryv**: Větší překryv (200-300 znaků) zajišťuje, že informace na hranicích chunků nejsou ztraceny.
-- **Model embeddings**: Model `text-embedding-3-large` poskytuje vysoce kvalitní vektorové reprezentace pro přesné vyhledávání.
+- **Chunk Size**: Smaller chunks (500-1000 characters) are suitable for precise searching of specific information, larger chunks (1500-2000 characters) preserve more context.
+- **Overlap**: Larger overlap (200-300 characters) ensures that information at chunk boundaries is not lost.
+- **Embeddings Model**: The `text-embedding-3-large` model provides high-quality vector representations for accurate searching.
 
-## Struktura projektu
+## Project Structure
 
-- `pdf_to_pinecone.py` - Hlavní skript
-- `requirements.txt` - Seznam závislostí
-- `.env` - Soubor s API klíči (není součástí repozitáře)
-- `PDF_INSTRUKCE.md` - Podrobné instrukce k použití
-- `PDFs/` - Adresář pro ukládání PDF souborů
+- `pdf_to_pinecone.py` - Main script
+- `requirements.txt` - List of dependencies
+- `.env` - File with API keys (not included in the repository)
+- `PDF_INSTRUCTIONS.md` - Detailed usage instructions
+- `PDFs/` - Directory for storing PDF files
 
-## Licence
+## License
 
-Tento projekt je licencován pod Apache License 2.0 - viz [oficiální text licence](https://www.apache.org/licenses/LICENSE-2.0).
+This project is licensed under the Apache License 2.0 - see the [official license text](https://www.apache.org/licenses/LICENSE-2.0).
 
-### Shrnutí licence Apache 2.0:
-- Můžete svobodně používat, upravovat a distribuovat tento software
-- Můžete používat software pro komerční účely
-- Nemusíte sdílet zdrojový kód vašich modifikací
-- Musíte zachovat informace o autorských právech a licenci
-- Poskytuje explicitní udělení patentových práv od přispěvatelů
-- Neposkytuje žádnou záruku a odmítá odpovědnost za škody 
+### Apache 2.0 License Summary:
+- You can freely use, modify, and distribute this software
+- You can use the software for commercial purposes
+- You don't have to share the source code of your modifications
+- You must retain copyright and license information
+- It provides an explicit grant of patent rights from contributors
+- It provides no warranty and disclaims liability for damages 
