@@ -1,0 +1,9 @@
+Používám API klíč: sk-proj-...o9wA
+Klient OpenAI byl inicializován
+Odesílám požadavek na OpenAI API...
+
+Úspěšné připojení k OpenAI API!
+Model: gpt-3.5-turbo-0125
+Odpověď: Ahoj, světe!
+Tokeny: 36
+Test dokončen
