@@ -1,50 +1,93 @@
-# Test OpenAI API
+# PDF to Pinecone Vector Database
 
-Jednoduchý Python skript pro testování připojení k OpenAI API.
+Tento projekt umožňuje extrakci textu z PDF dokumentů, jeho rozdělení na menší části, vytvoření vektorových reprezentací pomocí OpenAI embeddings a následné uložení do Pinecone vektorové databáze pro efektivní sémantické vyhledávání.
+
+## Funkce
+
+- **Extrakce textu z PDF** - Automatické načtení a extrakce textu z PDF dokumentů
+- **Inteligentní chunking** - Rozdělení textu na menší části s nastavitelnou velikostí a překryvem
+- **Vektorizace pomocí OpenAI** - Vytvoření kvalitních embeddings pomocí modelu `text-embedding-3-large`
+- **Ukládání do Pinecone** - Efektivní ukládání vektorů do Pinecone databáze
+- **Sémantické vyhledávání** - Vyhledávání relevantních informací pomocí přirozeného jazyka
+- **Interaktivní rozhraní** - Jednoduché uživatelské rozhraní pro nahrávání a vyhledávání
 
 ## Požadavky
 
-- Python 3.6+
+- Python 3.7+
 - OpenAI API klíč
+- Pinecone API klíč
+- Nainstalované závislosti z `requirements.txt`
 
 ## Instalace
 
-1. Naklonujte tento repozitář nebo stáhněte soubory.
-2. Nainstalujte potřebné závislosti:
+1. Naklonujte repozitář:
+   ```bash
+   git clone <url-repozitáře>
+   cd <název-adresáře>
+   ```
 
-```bash
-pip install -r requirements.txt
-```
+2. Nainstalujte závislosti:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Vytvořte soubor `.env` s vašimi API klíči:
+   ```
+   OPENAI_API_KEY=váš-openai-api-klíč
+   PINECONE_API_KEY=váš-pinecone-api-klíč
+   ```
 
 ## Použití
 
-Existují dva způsoby, jak poskytnout API klíč:
-
-### Metoda 1: Použití .env souboru
-
-1. Přejmenujte soubor `.env.example` na `.env`
-2. Nahraďte `your_openai_api_key_here` vaším skutečným OpenAI API klíčem
-
-### Metoda 2: Zadání klíče při spuštění
-
-Spusťte skript a zadejte API klíč, když budete vyzváni:
-
+Spusťte skript příkazem:
 ```bash
-python openai_api_test.py
+python3 pdf_to_pinecone.py
 ```
 
-## Co skript dělá
+### Nahrání PDF do Pinecone
 
-Skript provede jednoduché volání OpenAI API pomocí modelu GPT-3.5 Turbo a zobrazí odpověď. Tím ověříte, že:
+1. Vyberte možnost nahrání PDF do Pinecone
+2. Zadejte cestu k PDF souboru
+3. Volitelně nastavte velikost chunků a překryv
+4. Počkejte na dokončení procesu
 
-1. Váš API klíč je platný
-2. Máte přístup k API
-3. Můžete úspěšně získat odpovědi
+### Vyhledávání v dokumentu
 
-## Řešení problémů
+1. Vyberte možnost vyhledávání v dokumentu
+2. Zadejte váš dotaz v přirozeném jazyce
+3. Prohlédněte si výsledky seřazené podle relevance
 
-Pokud se zobrazí chyba, ujistěte se, že:
+## Jak to funguje
 
-- Váš API klíč je správný
-- Máte dostatečný kredit na vašem OpenAI účtu
-- Máte stabilní připojení k internetu 
+### 1. Extrakce textu z PDF
+Skript používá knihovnu PyPDF2 k extrakci textu ze všech stránek PDF dokumentu.
+
+### 2. Rozdělení textu na části (chunking)
+Extrahovaný text je rozdělen na menší překrývající se části (chunky) pro efektivní zpracování a vyhledávání.
+
+### 3. Vytváření embeddings
+Pro každý chunk je vytvořen embedding (vektorová reprezentace) pomocí OpenAI API a modelu `text-embedding-3-large`.
+
+### 4. Ukládání do Pinecone
+Embeddings jsou uloženy do Pinecone vektorové databáze spolu s metadaty obsahujícími původní text a informace o pozici v dokumentu.
+
+### 5. Vyhledávání
+Při vyhledávání je dotaz převeden na embedding a porovnán s uloženými vektory v Pinecone. Výsledky jsou seřazeny podle podobnosti.
+
+## Optimalizace
+
+- **Velikost chunků**: Menší chunky (500-1000 znaků) jsou vhodné pro přesné vyhledávání konkrétních informací, větší chunky (1500-2000 znaků) zachovávají více kontextu.
+- **Překryv**: Větší překryv (200-300 znaků) zajišťuje, že informace na hranicích chunků nejsou ztraceny.
+- **Model embeddings**: Model `text-embedding-3-large` poskytuje vysoce kvalitní vektorové reprezentace pro přesné vyhledávání.
+
+## Struktura projektu
+
+- `pdf_to_pinecone.py` - Hlavní skript
+- `requirements.txt` - Seznam závislostí
+- `.env` - Soubor s API klíči (není součástí repozitáře)
+- `PDF_INSTRUKCE.md` - Podrobné instrukce k použití
+- `PDFs/` - Adresář pro ukládání PDF souborů
+
+## Licence
+
+[Doplňte licenci] 
