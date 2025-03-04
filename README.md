@@ -99,3 +99,5 @@ This project is licensed under the Apache License 2.0 - see the [official licens
 - You must retain copyright and license information
 - It provides an explicit grant of patent rights from contributors
 - It provides no warranty and disclaims liability for damages 
+
+## Ať to fachčí!
