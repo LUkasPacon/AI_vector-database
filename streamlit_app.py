@@ -108,21 +108,22 @@ def main():
                     return_results=True
                 )
                 
-                if results and results.get("matches"):
-                    # Display results in expandable sections
-                    with st.expander("📌 Source Chunks", expanded=True):
-                        for i, match in enumerate(results["matches"], 1):
-                            st.markdown(f"**Result {i}** (Similarity: {match['score']:.4f})")
-                            st.markdown(f"Source: {match['metadata'].get('source', 'Unknown')}")
-                            st.text(match['metadata']['text'])
-                            st.divider()
-                    
-                    # Display AI answer
+                if results:
+                    # Display AI answer first
                     st.markdown("### 🤖 AI Answer")
                     answer = results.get("ai_answer", "No answer generated")
                     st.markdown(answer)
+                    
+                    # Display source chunks if available
+                    if results.get("matches"):
+                        with st.expander("📌 Source Chunks", expanded=False):
+                            for i, match in enumerate(results["matches"], 1):
+                                st.markdown(f"**Result {i}** (Similarity: {match['score']:.4f})")
+                                st.markdown(f"Source: {match['metadata'].get('source', 'Unknown')}")
+                                st.text(match['metadata']['text'])
+                                st.divider()
                 else:
-                    st.warning("No results found. Try reformulating your query.")
+                    st.error("An error occurred while searching. Please try again.")
     else:
         st.info("Please select an index or upload a PDF first.")
 

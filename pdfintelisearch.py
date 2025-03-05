@@ -169,19 +169,37 @@ def search_in_pdf(query: str, index_name: str = "pdf-search", top_k: int = 5,
             include_metadata=True
         )
         
-        if not results["matches"]:
-            print("No results found. Try reformulating your query.")
-            return None if not return_results else {"matches": [], "ai_answer": None}
-        
         # Filter and sort results
-        matches = [match for match in results["matches"] if match["score"] >= similarity_threshold]
-        matches = sorted(matches, key=lambda x: x["score"], reverse=True)[:top_k]
+        matches = []
+        if results["matches"]:
+            matches = [match for match in results["matches"] if match["score"] >= similarity_threshold]
+            matches = sorted(matches, key=lambda x: x["score"], reverse=True)[:top_k]
         
+        # If no relevant results found, use GPT-4 for general knowledge
         if not matches:
-            print("No results met the similarity threshold.")
-            return None if not return_results else {"matches": [], "ai_answer": None}
+            try:
+                response = openai_client.chat.completions.create(
+                    model="gpt-4-turbo-preview",
+                    messages=[
+                        {"role": "system", "content": "You are a helpful assistant. When answering, start with 'While this isn't mentioned in the document, I can tell you that...' to indicate this is general knowledge."},
+                        {"role": "user", "content": query}
+                    ],
+                    temperature=0.7,
+                    max_tokens=1000
+                )
+                answer = response.choices[0].message.content
+                
+                if return_results:
+                    return {"matches": [], "ai_answer": answer}
+                
+                print("\n=== AI-Generated Answer (General Knowledge) ===")
+                print(answer)
+                return None
+            except Exception as e:
+                print(f"Error generating general knowledge answer: {e}")
+                return None if not return_results else {"matches": [], "ai_answer": None}
         
-        # Generate answer using GPT-4
+        # Generate answer using document context
         answer = generate_answer_with_context(query, matches, openai_client)
         
         if return_results:
