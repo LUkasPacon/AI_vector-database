@@ -1,96 +1,114 @@
 # PDF to Pinecone Vector Database
 
-This project enables text extraction from PDF documents, splitting it into smaller chunks, creating vector representations using OpenAI embeddings, and storing them in a Pinecone vector database for efficient semantic searching.
+This tool allows you to upload PDF documents to a Pinecone vector database and perform semantic searches using natural language queries. The search results are then used as context for GPT-4 to generate comprehensive answers.
 
 ## Features
 
-- **PDF Text Extraction** - Automatic loading and extraction of text from PDF documents
-- **Intelligent Chunking** - Splitting text into smaller parts with adjustable size and overlap
-- **Vectorization with OpenAI** - Creation of high-quality embeddings using the `text-embedding-3-large` model
-- **Pinecone Storage** - Efficient storage of vectors in the Pinecone database
-- **Semantic Search** - Finding relevant information using natural language
-- **Interactive Interface** - Simple user interface for uploading and searching
+- PDF text extraction and intelligent chunking
+- Advanced semantic search using OpenAI's text-embedding-3-large model
+- Interactive search interface with multiple results
+- AI-powered answers using GPT-4 based on found contexts
+- Index management for Pinecone's free tier (5 index limit)
+- Support for multiple PDFs in different indexes
 
-## Requirements
+## Prerequisites
 
-- Python 3.7+
+- Python 3.8 or higher
 - OpenAI API key
 - Pinecone API key
-- Dependencies installed from `requirements.txt`
+- Required Python packages (see requirements.txt)
 
 ## Installation
 
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd <directory-name>
-   ```
-
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Create a `.env` file with your API keys:
-   ```
-   OPENAI_API_KEY=your-openai-api-key
-   PINECONE_API_KEY=your-pinecone-api-key
-   ```
+1. Clone this repository
+2. Install the required packages:
+```bash
+python3 -m pip install -r requirements.txt
+```
+3. Create a `.env` file in the project root with your API keys:
+```
+OPENAI_API_KEY=your_openai_api_key
+PINECONE_API_KEY=your_pinecone_api_key
+```
 
 ## Usage
 
-Run the script with the command:
+Run the script:
 ```bash
 python3 pdf_to_pinecone.py
 ```
 
-### Uploading a PDF to Pinecone
+### Main Menu Options
 
-1. Select the option to upload a PDF to Pinecone
-2. Enter the path to the PDF file
-3. Optionally set the chunk size and overlap
-4. Wait for the process to complete
+1. **Upload new PDF and create index**
+   - Enter path to your PDF file
+   - Choose chunk size (default: 800 characters)
+   - Set overlap between chunks (default: 200 characters)
+   - Name your index (or use default "pdf-search")
+   - The script will extract text, create embeddings, and upload to Pinecone
+   - After upload, enters search mode automatically
 
-### Searching in the Document
+2. **Search in existing index**
+   - Choose from list of available indexes
+   - Enter search queries in natural language
+   - Specify number of results to display (default: 5)
+   - Get AI-generated answers based on found contexts
 
-1. Select the option to search in the document
-2. Enter your query in natural language
-3. View the results sorted by relevance
+3. **Exit**
+   - Quit the program
 
-## How It Works
+### Search Tips
 
-### 1. PDF Text Extraction
-The script uses the PyPDF2 library to extract text from all pages of the PDF document.
+- Use specific, focused queries
+- Try different formulations of the same question
+- Include keywords from the document
+- Ask questions naturally - the AI will generate comprehensive answers
+- Results show similarity scores (0.3 or higher)
+- Each result includes source and relevant text excerpt
+- The AI combines all relevant contexts to generate answers
 
-### 2. Text Chunking
-The extracted text is divided into smaller overlapping parts (chunks) for efficient processing and searching.
+### Index Management
 
-### 3. Creating Embeddings
-For each chunk, an embedding (vector representation) is created using the OpenAI API and the `text-embedding-3-large` model.
+- Maximum 5 indexes in Pinecone's free tier
+- Options when limit is reached:
+  1. Delete an existing index
+  2. Use an existing index
+  3. Cancel operation
+- Index names can only contain lowercase letters, numbers, and hyphens
 
-### 4. Storing in Pinecone
-Embeddings are stored in the Pinecone vector database along with metadata containing the original text and information about the position in the document.
+## Technical Details
 
-### 5. Searching
-When searching, the query is converted to an embedding and compared with the stored vectors in Pinecone. Results are sorted by similarity.
+- Text Chunking:
+  - Default chunk size: 800 characters
+  - Default overlap: 200 characters
+  - Intelligent paragraph preservation
+  - Overlap maintenance for context continuity
 
-## Optimization
+- Embeddings:
+  - Model: text-embedding-3-large (OpenAI)
+  - Batch processing for API efficiency
+  - Cosine similarity metric
 
-- **Chunk Size**: Smaller chunks (500-1000 characters) are suitable for precise searching of specific information, larger chunks (1500-2000 characters) preserve more context.
-- **Overlap**: Larger overlap (200-300 characters) ensures that information at chunk boundaries is not lost.
-- **Embeddings Model**: The `text-embedding-3-large` model provides high-quality vector representations for accurate searching.
+- Search:
+  - Semantic similarity threshold: 0.3
+  - Multiple results with scoring
+  - Context-aware answer generation
+  - GPT-4 for answer synthesis
 
-## Project Structure
+## Error Handling
 
-- `pdf_to_pinecone.py` - Main script
-- `requirements.txt` - List of dependencies
-- `.env` - File with API keys (not included in the repository)
-- `PDF_INSTRUCTIONS.md` - Detailed usage instructions
-- `PDFs/` - Directory for storing PDF files
+- Graceful handling of API errors
+- Invalid file path detection
+- Index limit management
+- Input validation for all user inputs
+
+## Contributing
+
+Feel free to submit issues, fork the repository, and create pull requests for any improvements.
 
 ## License
 
-This project is licensed under the Apache License 2.0 - see the [official license text](https://www.apache.org/licenses/LICENSE-2.0).
+This project is licensed under the Apache License 2.0 - see the LICENSE file for details.
 
 ### Apache 2.0 License Summary:
 - You can freely use, modify, and distribute this software
