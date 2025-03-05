@@ -1,13 +1,15 @@
-# PDF to Pinecone Vector Database
+# PDFIntelliSearch
 
-This tool allows you to upload PDF documents to a Pinecone vector database and perform semantic searches using natural language queries. The search results are then used as context for GPT-4 to generate comprehensive answers.
+An intelligent PDF search engine that implements Retrieval-Augmented Generation (RAG) architecture, combining vector databases (Pinecone) with AI (GPT-4) to provide smart, context-aware answers to your questions about PDF documents.
+
+This tool allows you to upload PDF documents to a Pinecone vector database and perform semantic searches using natural language queries. Using the RAG approach, relevant document chunks are retrieved and used as context for GPT-4 to generate accurate, document-grounded answers.
 
 ## Features
 
 - PDF text extraction and intelligent chunking
 - Advanced semantic search using OpenAI's text-embedding-3-large model
 - Interactive search interface with multiple results
-- AI-powered answers using GPT-4 based on found contexts
+- RAG-based answer generation using GPT-4 with retrieved contexts
 - Index management for Pinecone's free tier (5 index limit)
 - Support for multiple PDFs in different indexes
 
@@ -35,7 +37,7 @@ PINECONE_API_KEY=your_pinecone_api_key
 
 Run the script:
 ```bash
-python3 pdf_to_pinecone.py
+python3 pdfintelisearch.py
 ```
 
 ### Main Menu Options
@@ -78,6 +80,11 @@ python3 pdf_to_pinecone.py
 
 ## Technical Details
 
+- RAG Architecture:
+  - Retrieval: Semantic search in Pinecone vector database
+  - Augmentation: Context injection from retrieved chunks
+  - Generation: GPT-4 answer synthesis with grounding
+
 - Text Chunking:
   - Default chunk size: 800 characters
   - Default overlap: 200 characters
@@ -119,3 +126,12 @@ This project is licensed under the Apache License 2.0 - see the LICENSE file for
 - It provides no warranty and disclaims liability for damages 
 
 ## Ať to fachčí!
+
+## Project Structure
+
+- `pdfintelisearch.py` - Main script implementing the RAG architecture
+- `requirements.txt` - List of required Python packages
+- `.env` - Configuration file for API keys (not included in repository)
+- `INSTRUCTIONS.md` - Detailed usage instructions
+- `PDFs/` - Directory for storing PDF documents
+- `README.md` - Project documentation and setup guide
