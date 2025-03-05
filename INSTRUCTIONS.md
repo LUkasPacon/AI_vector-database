@@ -1,89 +1,174 @@
-# Instructions for Uploading PDF to Pinecone
+# PDFIntelliSearch Instructions / Instrukce
 
-I have created a script `pdf_to_pinecone.py` that allows you to extract text from a PDF file, split it into smaller parts, create embeddings using the `text-embedding-3-large` model, and upload them to a Pinecone database. You can then search the PDF content using semantic queries.
+## English Instructions
 
-## What the Script Does
+### Quick Start
 
-1. Extracts text from a PDF file
-2. Splits the text into smaller parts (chunks) with adjustable size and overlap
-3. Creates embeddings for each chunk using the `text-embedding-3-large` model
-4. Uploads vectors to a Pinecone index
-5. Allows searching in the PDF content using semantic queries
-
-## Installing Dependencies
-
-Before running the script, you need to install the necessary dependencies:
-
-```bash
-python3 -m pip install pinecone-client>=3.0.0 python-dotenv PyPDF2>=3.0.0 openai>=1.0.0
-```
-
-## How to Use the Script
-
-1. Open a terminal
-2. Navigate to the project directory:
-   ```
-   cd /path/to/your/project
+1. **Installation**:
+   ```bash
+   # Install dependencies
+   python3 -m pip install -r requirements.txt
+   
+   # Create .env file with your API keys
+   echo "OPENAI_API_KEY=your_key_here" > .env
+   echo "PINECONE_API_KEY=your_key_here" >> .env
    ```
 
-3. Run the script:
+2. **Running the Application**:
+   
+   GUI Mode (Recommended):
+   ```bash
+   streamlit run streamlit_app.py
    ```
-   python3 pdf_to_pinecone.py
+   
+   CLI Mode:
+   ```bash
+   python3 pdfintelisearch.py
    ```
 
-4. Follow the interactive prompts:
-   - Enter the path to the PDF file
-   - Optionally set the chunk size and overlap
-   - After uploading the data, you can start searching the PDF content
+### Using the GUI
 
-## Usage Example
+1. **Upload PDF**:
+   - Click "Upload PDF" in the sidebar
+   - Drag & drop your PDF file
+   - Click "Process PDF" to start extraction
 
-```
-Enter the path to the PDF file: /path/to/your/document.pdf
-Enter chunk size (default: 1000): 800
-Enter overlap size (default: 200): 100
+2. **Configure Settings**:
+   - Adjust chunk size (300-2000)
+   - Set overlap (50-500)
+   - Tune similarity threshold (0.0-1.0)
+   - Select number of results (1-10)
 
-...
+3. **Search**:
+   - Select an index from the dropdown
+   - Enter your question
+   - View results and AI-generated answers
+   - Expand source chunks for details
 
-=== Search in PDF ===
-Enter query (or 'exit' to quit): What are the main advantages of artificial intelligence?
-How many results do you want to display? (default: 5): 2
+### Using the CLI
 
-...
+1. **Main Menu**:
+   - Option 1: Upload new PDF
+   - Option 2: Search existing index
+   - Option 3: Exit
 
-=== Search in PDF ===
-Enter query (or 'exit' to quit): exit
-```
+2. **PDF Upload**:
+   - Enter PDF path
+   - Set chunk size and overlap
+   - Choose index name
+   - Wait for processing
 
-## Tips for Optimal Use
+3. **Search Mode**:
+   - Select index number
+   - Enter search query
+   - View results and AI answers
 
-1. **Chunk Size**: 
-   - Smaller chunks (500-800 characters) are suitable for precise searching of specific information
-   - Larger chunks (1000-2000 characters) preserve more context but may be less precise
+### Tips for Better Results
 
-2. **Overlap Size**:
-   - Larger overlap (200-300 characters) helps capture information that might otherwise be split between chunks
-   - Smaller overlap saves space in the database
+1. **PDF Quality**:
+   - Use searchable PDFs
+   - Ensure clear formatting
+   - Check text extraction quality
 
-3. **Query Formulation**:
-   - Use natural questions or phrases
-   - Experiment with different formulations for better results
-   - Include specific keywords from the document when possible
+2. **Search Queries**:
+   - Be specific
+   - Use natural language
+   - Include relevant keywords
 
-## Troubleshooting
+3. **Settings Optimization**:
+   - Larger chunks for context
+   - More overlap for connectivity
+   - Lower threshold for more results
 
-- **Error extracting text from PDF**: Some PDF files may be protected or use non-standard formatting. Try another PDF file or use a tool for preliminary conversion of PDF to text.
+## České Instrukce
 
-- **Error creating embeddings**: Make sure you have correctly set up the OpenAI API key and that you have sufficient credits.
+### Rychlý Start
 
-- **Memory issues**: If you're processing very large PDF files, you may run out of memory. Try reducing the chunk size or processing the PDF in parts.
+1. **Instalace**:
+   ```bash
+   # Instalace závislostí
+   python3 -m pip install -r requirements.txt
+   
+   # Vytvoření .env souboru s API klíči
+   echo "OPENAI_API_KEY=vas_klic" > .env
+   echo "PINECONE_API_KEY=vas_klic" >> .env
+   ```
 
-## Extending Functionality
+2. **Spuštění Aplikace**:
+   
+   GUI Režim (Doporučeno):
+   ```bash
+   streamlit run streamlit_app.py
+   ```
+   
+   CLI Režim:
+   ```bash
+   python3 pdfintelisearch.py
+   ```
 
-You can further extend the script to include:
+### Použití GUI
 
-1. Support for more document formats (DOCX, TXT, HTML)
-2. Extraction of metadata from PDFs (author, creation date, keywords)
-3. Filtering results by metadata
-4. Visualization of search results
-5. Hybrid search combining vector and keyword search 
+1. **Nahrání PDF**:
+   - Klikněte na "Upload PDF" v postranním panelu
+   - Přetáhněte PDF soubor
+   - Klikněte na "Process PDF" pro zahájení extrakce
+
+2. **Nastavení**:
+   - Velikost chunků (300-2000)
+   - Překryv (50-500)
+   - Práh podobnosti (0.0-1.0)
+   - Počet výsledků (1-10)
+
+3. **Vyhledávání**:
+   - Vyberte index z rozbalovací nabídky
+   - Zadejte otázku
+   - Prohlédněte si výsledky a AI odpovědi
+   - Rozbalte zdrojové chunky pro detaily
+
+### Použití CLI
+
+1. **Hlavní Menu**:
+   - Volba 1: Nahrát nové PDF
+   - Volba 2: Vyhledávat v existujícím indexu
+   - Volba 3: Ukončit
+
+2. **Nahrávání PDF**:
+   - Zadejte cestu k PDF
+   - Nastavte velikost chunků a překryv
+   - Zvolte název indexu
+   - Počkejte na zpracování
+
+3. **Režim Vyhledávání**:
+   - Vyberte číslo indexu
+   - Zadejte vyhledávací dotaz
+   - Prohlédněte si výsledky a AI odpovědi
+
+### Tipy pro Lepší Výsledky
+
+1. **Kvalita PDF**:
+   - Používejte prohledávatelná PDF
+   - Zajistěte čisté formátování
+   - Zkontrolujte kvalitu extrakce textu
+
+2. **Vyhledávací Dotazy**:
+   - Buďte konkrétní
+   - Používejte přirozený jazyk
+   - Zahrňte relevantní klíčová slova
+
+3. **Optimalizace Nastavení**:
+   - Větší chunky pro kontext
+   - Větší překryv pro spojitost
+   - Nižší práh pro více výsledků
+
+## API Usage / Použití API
+
+### OpenAI API
+- Used for embeddings (text-embedding-3-large)
+- Used for answer generation (GPT-4 Turbo)
+- Costs apply based on token usage
+
+### Pinecone API
+- Free tier: 5 indexes maximum
+- Serverless deployment on AWS
+- 3072-dimensional vectors
+- Cosine similarity search 
